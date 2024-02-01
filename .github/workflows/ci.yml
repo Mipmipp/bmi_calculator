@@ -1,0 +1,25 @@
+name: CI/CD Rust Tests
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Run tests
+        run: cargo test
+
+      - name: Publish test results
+        uses: actions/github-artifact@v5
+        with:
+          artifacts: target/debug/deps/tests
