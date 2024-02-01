@@ -39,4 +39,5 @@ fn main() {
     let bmi_formatted = utils::format_bmi(bmi_value);
 
 
-    println!("{}{}", messages::BMI_RESPONSE ,bmi_formatted);}
+    println!("{}{}", messages::BMI_RESPONSE ,bmi_formatted);
+}
