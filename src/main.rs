@@ -73,8 +73,3 @@ mod tests {
         Ok(())
     }
 }
-
-// redondear peso
-// Please enter your weight in kilograms: 57.35
-// Please enter your height in centimeters: 172
-// Your BMI is: 1938.55
