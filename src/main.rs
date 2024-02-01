@@ -19,8 +19,21 @@ fn main() {
 
    
 
-    let weight_parsed: f64 = utils::parse_input(weight).unwrap();
-    let height_parsed: f64 = utils::parse_input(height).unwrap();
+     let weight_parsed = match utils::parse_input(weight) {
+        Ok(num) => num,
+        Err(e) => {
+            println!("Error parsing weight: {}", e);
+            return;
+        }
+    };
+
+    let height_parsed = match utils::parse_input(height) {
+        Ok(num) => num,
+        Err(e) => {
+            println!("Error parsing height: {}", e);
+            return;
+        }
+    };
 
     let bmi_value = utils::calculate_bmi(weight_parsed, height_parsed);
     let bmi_formatted = utils::format_bmi(bmi_value);
