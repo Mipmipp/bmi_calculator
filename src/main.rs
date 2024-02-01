@@ -19,8 +19,8 @@ fn main() {
 
    
 
-    let weight_parsed: f64 = utils::parse_input(weight).unwrap()
-    let height_parsed: f64 = utils::parse_input(height).unwrap()
+    let weight_parsed: f64 = utils::parse_input(weight).unwrap();
+    let height_parsed: f64 = utils::parse_input(height).unwrap();
 
 
     println!("data, {}, {}!", weight_parsed, height_parsed);
