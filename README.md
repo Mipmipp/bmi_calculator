@@ -3,8 +3,8 @@
 A functional BMI calculator implemented in Rust to explore fundamental programming concepts.
 
 ## Table of Contents
-- Usage
-- Tests
+- [Usage](https://github.com/Mipmipp/bmi_calculator/tree/master#usage)
+- [Tests](https://github.com/Mipmipp/bmi_calculator/edit/master/README.md#tests)
  
 ## Usage
 
