@@ -53,7 +53,7 @@ mod tests {
 
     #[test]
     fn test_parse_input_empty() {
-        let input = String::new(); // Input vacío.
+        let input = String::new();
         let result = parse_input(input);
         assert!(matches!(result, Err(ref e) if e == errors::ERROR_EMPTY_INPUT));
     }
