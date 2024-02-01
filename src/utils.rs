@@ -25,6 +25,10 @@ pub fn parse_input(input: String) -> Result<f64, String> {
     }
 }
 
+pub fn format_bmi(bmi: f64) -> String {
+    format!("{:.2}", bmi)
+}
+
 fn meters_to_centimeters(meters: f64) -> f64 {
     meters * 100.0
 }
