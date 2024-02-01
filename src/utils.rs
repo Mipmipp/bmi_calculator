@@ -1,7 +1,8 @@
 use crate::errors;
 
-pub fn calculate_bmi(weight: f64, height: f64) -> f64 {
-    weight / (height * height)
+pub fn calculate_bmi(weight: f64, height_cm: f64) -> f64 {
+    let height_m = centimeters_to_meters(height_cm);
+    weight / (height_m * height_m)
 }
 
 pub fn parse_input(input: String) -> Result<f64, String> {
@@ -26,4 +27,8 @@ pub fn parse_input(input: String) -> Result<f64, String> {
 
 fn meters_to_centimeters(meters: f64) -> f64 {
     meters * 100.0
+}
+
+fn centimeters_to_meters(centimeters: f64) -> f64 {
+    centimeters / 100.0
 }
