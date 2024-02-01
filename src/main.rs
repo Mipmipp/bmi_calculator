@@ -1,6 +1,6 @@
-mod errors;
-mod messages;
-mod utils;
+pub mod errors;
+pub mod messages;
+pub mod utils;
 use std::io;
 
 fn main() {
