@@ -25,7 +25,7 @@ pub fn parse_input(input: String) -> Result<f64, String> {
     }
 }
 
-pub fn format_bmi(bmi: f64) -> String {
+pub fn format_number_with_2_decimals(bmi: f64) -> String {
     format!("{:.2}", bmi)
 }
 
@@ -83,7 +83,7 @@ mod tests {
     fn test_format_bmi() {
         const BMI_UNFORMATTED: f64 = 23.0654232;
         let expected: String = format!("{:.2}", BMI_UNFORMATTED);
-        assert_eq!(format_bmi(BMI_UNFORMATTED), expected);
+        assert_eq!(format_number_with_2_decimals(BMI_UNFORMATTED), expected);
     }
 
     #[test]

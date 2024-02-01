@@ -22,7 +22,7 @@ fn run<R: BufRead, W: Write>(input: &mut R, output: &mut W) -> Result<(), Box<dy
     let height_parsed = utils::parse_input((&height.trim()).to_string())?;
 
     let bmi_value = utils::calculate_bmi(weight_parsed, height_parsed);
-    let bmi_formatted = utils::format_bmi(bmi_value);
+    let bmi_formatted = utils::format_number_with_2_decimals(bmi_value);
 
     writeln!(output, "{}{}", messages::BMI_RESPONSE, bmi_formatted)?;
 
@@ -73,3 +73,8 @@ mod tests {
         Ok(())
     }
 }
+
+// redondear peso
+// Please enter your weight in kilograms: 57.35
+// Please enter your height in centimeters: 172
+// Your BMI is: 1938.55
