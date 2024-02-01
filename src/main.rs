@@ -32,3 +32,44 @@ fn run<R: BufRead, W: Write>(input: &mut R, output: &mut W) -> Result<(), Box<dy
 fn main() -> Result<(), Box<dyn Error>> {
     run(&mut io::stdin().lock(), &mut io::stdout())
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::io::{Cursor, BufReader};
+
+    #[test]
+    fn test_with_number_with_valid_input() -> Result<(), Box<dyn Error>> {
+        const BMI_FORMATTED_RESULT: &str = "16.98";
+        let expect_output: String = format!("{}{}", messages::BMI_RESPONSE, BMI_FORMATTED_RESULT);
+
+        let input_data = "55\n1.80\n";
+        let mut input = BufReader::new(Cursor::new(input_data.as_bytes()));
+        let mut output = Vec::new();
+
+        let result = run(&mut input, &mut output);
+
+        let output_str = String::from_utf8(output)?;
+   
+        assert!(result.is_ok());
+        assert!(output_str.contains(&expect_output));
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_with_number_with_invalid_input() -> Result<(), Box<dyn Error>> {
+        let input_data = "\n1.80.0\n";
+        let mut input = BufReader::new(Cursor::new(input_data.as_bytes()));
+        let mut output = Vec::new();
+
+        let result = run(&mut input, &mut output);
+
+        assert!(result.is_err());
+        let err = result.err().unwrap();
+        assert_eq!(err.to_string(), errors::ERROR_EMPTY_INPUT);
+
+        Ok(())
+    }
+}
