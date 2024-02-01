@@ -8,6 +8,10 @@ pub fn calculate_bmi(weight: f64, height_cm: f64) -> f64 {
 pub fn parse_input(input: String) -> Result<f64, String> {
     if input.trim().is_empty() {
         return Err(errors::ERROR_EMPTY_INPUT.to_string());
+    } 
+
+    if input.trim() == "0" {
+        return Err(errors::ERROR_NUMBER_IS_ZERO.to_string());
     }
 
     let filtered_input: String = input.replace(',', ".").trim().to_string();
@@ -58,6 +62,13 @@ mod tests {
         assert!(matches!(result, Err(ref e) if e == errors::ERROR_EMPTY_INPUT));
     }
     
+    #[test]
+    fn test_parse_input_with_zero() {
+        let input = "0".to_string();
+        let result = parse_input(input);
+        assert!(matches!(result, Err(ref e) if e == errors::ERROR_NUMBER_IS_ZERO));
+    }
+
     #[test]
     fn test_parse_input_with_invalid_number() {
         let input = "1.345.435".to_string();
