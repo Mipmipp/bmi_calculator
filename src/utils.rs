@@ -5,7 +5,7 @@ pub fn calculate_bmi(weight: f64, height_cm: f64) -> f64 {
     weight / (height_m * height_m)
 }
 
-pub fn parse_input(input: String) -> Result<f64, String> {
+pub fn parse_height_input(input: String) -> Result<f64, String> {
     if input.trim().is_empty() {
         return Err(errors::ERROR_EMPTY_INPUT.to_string());
     } 
