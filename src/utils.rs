@@ -1,5 +1,14 @@
 use crate::errors;
 
+enum BmiClassification {
+    Underweight,
+    NormalWeight,
+    Overweight,
+    Obese,
+}
+
+
+
 pub fn calculate_bmi(weight: f64, height_cm: f64) -> f64 {
     let height_m = centimeters_to_meters(height_cm);
     weight / (height_m * height_m)
