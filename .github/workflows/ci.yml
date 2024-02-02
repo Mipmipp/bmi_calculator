@@ -1,25 +1,32 @@
-name: CI/CD Rust Tests
+on: [push, pull_request]
 
-on:
-  - push
-  - pull_request
+name: Continuous integration
 
 jobs:
-  build:
+  check:
+    name: Check
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
+      - uses: actions-rs/toolchain@v1
         with:
+          profile: minimal
           toolchain: stable
-
-      - name: Run tests
-        run: cargo test
-
-      - name: Publish test results
-        uses: actions/github-artifact@v5
+          override: true
+      - uses: actions-rs/cargo@v1
         with:
-          artifacts: target/debug/deps/tests
+          command: check
+
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
