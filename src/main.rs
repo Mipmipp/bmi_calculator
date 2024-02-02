@@ -1,9 +1,10 @@
 pub mod errors;
 pub mod messages;
 pub mod utils;
+use utils::BmiClassification;
 use std::io::{self, BufRead, Write};
 use std::error::Error;
-
+ 
 fn main() -> Result<(), Box<dyn Error>> {
     run(&mut io::stdin().lock(), &mut io::stdout())
 }
@@ -44,7 +45,17 @@ fn height_from_user_input<R: BufRead, W: Write>(input: &mut R, output: &mut W) -
 }
 
 fn show_results<W: Write>(output: &mut W, bmi_formatted: String) -> Result<(), Box<dyn Error>> {
-    writeln!(output, "{}{}", messages::BMI_RESPONSE, bmi_formatted)?;
+    let bmi_value = bmi_formatted.parse::<f64>()?;
+    let classification = utils::determine_bmi_classification(bmi_value);
+
+    let message = match classification {
+        BmiClassification::Underweight => messages::UNDERWEIGHT_BMI_RESPONSE,
+        BmiClassification::NormalWeight => messages::NORMAL_WEIGHT_BMI_RESPONSE,
+        BmiClassification::Overweight => messages::OVERWEIGHT_BMI_RESPONSE,
+        BmiClassification::Obese => messages::OBESE_BMI_RESPONSE,
+    };
+
+    writeln!(output, "{}{}. {}", messages::BMI_RESPONSE, bmi_formatted, message)?;
     Ok(())
 }
 
@@ -56,7 +67,7 @@ mod tests {
     #[test]
     fn test_with_number_with_valid_input() -> Result<(), Box<dyn Error>> {
         const BMI_FORMATTED_RESULT: &str = "16.98";
-        let expect_output: String = format!("{}{}", messages::BMI_RESPONSE, BMI_FORMATTED_RESULT);
+        let expect_output: String = format!("{}{}. {}", messages::BMI_RESPONSE, BMI_FORMATTED_RESULT, messages::UNDERWEIGHT_BMI_RESPONSE);
 
         let input_data = "55\n1.80\n";
         let mut input = BufReader::new(Cursor::new(input_data.as_bytes()));

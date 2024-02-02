@@ -1,5 +1,28 @@
 use crate::errors;
 
+pub enum BmiClassification {
+    Underweight,
+    NormalWeight,
+    Overweight,
+    Obese,
+}
+
+const UNDERWEIGHT_THRESHOLD: f64 = 18.5;
+const NORMAL_WEIGHT_THRESHOLD: f64 = 25.0;
+const OVERWEIGHT_THRESHOLD: f64 = 30.0;
+
+pub fn determine_bmi_classification(bmi_value: f64) -> BmiClassification {
+    if bmi_value < UNDERWEIGHT_THRESHOLD {
+        BmiClassification::Underweight
+    } else if bmi_value < NORMAL_WEIGHT_THRESHOLD {
+        BmiClassification::NormalWeight
+    } else if bmi_value < OVERWEIGHT_THRESHOLD {
+        BmiClassification::Overweight
+    } else {
+        BmiClassification::Obese
+    }
+}
+
 pub fn calculate_bmi(weight: f64, height_cm: f64) -> f64 {
     let height_m = centimeters_to_meters(height_cm);
     weight / (height_m * height_m)
@@ -69,6 +92,30 @@ mod tests {
     const HEIGHT_M: f64 = 1.65;
     const HEIGHT_CM: f64 = 165.0;
     
+   #[test]
+    fn test_underweight() {
+        let bmi_value = 17.5;
+        matches!( determine_bmi_classification(bmi_value), BmiClassification::Underweight);
+    }
+ 
+    #[test]
+    fn test_normal_weight() {
+        let bmi_value = 25.0;
+        matches!( determine_bmi_classification(bmi_value), BmiClassification::NormalWeight);
+    }
+
+    #[test]
+    fn test_overweight() {
+        let bmi_value = 30.0;
+        matches!( determine_bmi_classification(bmi_value), BmiClassification::Overweight);
+    }
+
+    #[test]
+    fn test_obese() {
+        let bmi_value = 40.0;
+        matches!( determine_bmi_classification(bmi_value), BmiClassification::Obese);
+    }
+
     #[test]
     fn test_calculate_bmi() {
         const WEIGHT: f64 = 75.0;
