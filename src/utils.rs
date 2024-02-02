@@ -77,38 +77,57 @@ mod tests {
     }
 
     #[test]
-    fn test_parse_input_empty() {
+    fn test_validate_input_valid() {
+        let input = "1".to_string();
+        let result = validate_input(input);
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_validate_input_empty() {
         let input = String::new();
-        let result = parse_input(input);
+        let result = validate_input(input);
         assert!(matches!(result, Err(ref e) if e == errors::ERROR_EMPTY_INPUT));
     }
     
     #[test]
-    fn test_parse_input_with_zero() {
+    fn test_validate_input_with_zero() {
         let input = "0".to_string();
-        let result = parse_input(input);
+        let result = validate_input(input);
         assert!(matches!(result, Err(ref e) if e == errors::ERROR_NUMBER_IS_ZERO));
     }
 
     #[test]
-    fn test_parse_input_with_invalid_number() {
+    fn test_parse_height_input_valid_number() {
+        let input = "1.65".to_string();
+        assert_eq!(parse_height_input(input).unwrap(), HEIGHT_CM);
+    }
+ 
+    #[test]
+    fn test_parse_height_input_with_invalid_number() {
         let input = "1.345.435".to_string();
-        let result = parse_input(input);
+        let result = parse_height_input(input);
         assert!(matches!(result, Err(ref e) if e == errors::ERROR_VALID_NUMBER));
     }
 
    #[test]
-    fn test_parse_input_with_number_with_decimal() {
+    fn test_parse_height_input_number_with_decimal() {
         let input = "1.345".to_string();
-        let result = parse_input(input);
+        let result = parse_height_input(input);
         assert!(matches!(result, Ok(number) if (number - 134.5).abs() < f64::EPSILON));
     }
 
     #[test]
-    fn test_parse_input_with_number_without_decimal() {
+    fn test_parse_height_input_with_number_without_decimal() {
         let input = "1".to_string();
-        let result = parse_input(input);
+        let result = parse_height_input(input);
         assert!(matches!(result, Ok(number) if (number - 1.0).abs() < f64::EPSILON));
+    }
+
+    #[test] 
+    fn test_parse_weight_input_with_valid_number() {
+        let input = "75.45".to_string();
+        assert_eq!(parse_weight_input(input).unwrap(), 75.0);
     }
 
     #[test]
