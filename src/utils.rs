@@ -1,6 +1,6 @@
 use crate::errors;
 
-enum BmiClassification {
+pub enum BmiClassification {
     Underweight,
     NormalWeight,
     Overweight,
@@ -11,7 +11,7 @@ const UNDERWEIGHT_THRESHOLD: f64 = 18.5;
 const NORMAL_WEIGHT_THRESHOLD: f64 = 25.0;
 const OVERWEIGHT_THRESHOLD: f64 = 30.0;
 
-fn determine_bmi_classification(bmi_value: f64) -> BmiClassification {
+pub fn determine_bmi_classification(bmi_value: f64) -> BmiClassification {
     if bmi_value < UNDERWEIGHT_THRESHOLD {
         BmiClassification::Underweight
     } else if bmi_value < NORMAL_WEIGHT_THRESHOLD {
@@ -92,6 +92,30 @@ mod tests {
     const HEIGHT_M: f64 = 1.65;
     const HEIGHT_CM: f64 = 165.0;
     
+   #[test]
+    fn test_underweight() {
+        let bmi_value = 17.5;
+        matches!( determine_bmi_classification(bmi_value), BmiClassification::Underweight);
+    }
+ 
+    #[test]
+    fn test_normal_weight() {
+        let bmi_value = 25.0;
+        matches!( determine_bmi_classification(bmi_value), BmiClassification::NormalWeight);
+    }
+
+    #[test]
+    fn test_overweight() {
+        let bmi_value = 30.0;
+        matches!( determine_bmi_classification(bmi_value), BmiClassification::Overweight);
+    }
+
+    #[test]
+    fn test_obese() {
+        let bmi_value = 40.0;
+        matches!( determine_bmi_classification(bmi_value), BmiClassification::Obese);
+    }
+
     #[test]
     fn test_calculate_bmi() {
         const WEIGHT: f64 = 75.0;
