@@ -45,12 +45,12 @@ pub fn parse_weight_input(input: String) -> Result<f64, String> {
     
 }
 
-pub fn format_number_with_2_decimals(bmi: f64) -> String {
-    format!("{:.2}", bmi)
+pub fn format_number_with_2_decimals(number: f64) -> String {
+    format!("{:.2}", number)
 }
 
-pub fn format_number_without_decimals(bmi: f64) -> f64 {
-    bmi.floor()
+pub fn format_number_without_decimals(number: f64) -> f64 {
+    number.floor()
 }
 
 fn meters_to_centimeters(meters: f64) -> f64 {
