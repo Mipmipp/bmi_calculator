@@ -4,35 +4,49 @@ pub mod utils;
 use std::io::{self, BufRead, Write};
 use std::error::Error;
 
+fn main() -> Result<(), Box<dyn Error>> {
+    run(&mut io::stdin().lock(), &mut io::stdout())
+}
+
+
 fn run<R: BufRead, W: Write>(input: &mut R, output: &mut W) -> Result<(), Box<dyn Error>> {
+    let weight = weight_from_user_input(input, output)?;    
+    let height: f64 = height_from_user_input(input, output)?;   
+ 
+    let bmi_value = utils::calculate_bmi(weight, height);
+    let bmi_formatted = utils::format_number_with_2_decimals(bmi_value);
+
+    show_results(output, bmi_formatted)?;
+
+    Ok(())
+}
+
+fn weight_from_user_input<R: BufRead, W: Write>(input: &mut R, output: &mut W) -> Result<f64, Box<dyn Error>> {
     let mut weight = String::new();
-    let mut height = String::new();
 
     write!(output, "{}", messages::ENTER_WEIGHT)?;
     output.flush()?;
 
     input.read_line(&mut weight)?;
 
+    Ok(utils::parse_weight_input((&weight.trim()).to_string())?)
+}
+
+fn height_from_user_input<R: BufRead, W: Write>(input: &mut R, output: &mut W) -> Result<f64, Box<dyn Error>> {
+    let mut height = String::new();
+
     write!(output, "{}", messages::ENTER_HEIGHT)?;
-    output.flush()?; 
+    output.flush()?;
 
-    input.read_line(&mut height)?;
-    
-    let weight_parsed = utils::parse_weight_input((&weight.trim()).to_string())?;
-    let height_parsed = utils::parse_height_input((&height.trim()).to_string())?;
- 
-    let bmi_value = utils::calculate_bmi(weight_parsed, height_parsed);
-    let bmi_formatted = utils::format_number_with_2_decimals(bmi_value);
+    input.read_line(&mut height)?;  
 
+    Ok(utils::parse_height_input((&height.trim()).to_string())?)
+}
+
+fn show_results<W: Write>(output: &mut W, bmi_formatted: String) -> Result<(), Box<dyn Error>> {
     writeln!(output, "{}{}", messages::BMI_RESPONSE, bmi_formatted)?;
-
     Ok(())
 }
-
-fn main() -> Result<(), Box<dyn Error>> {
-    run(&mut io::stdin().lock(), &mut io::stdout())
-}
-
 
 #[cfg(test)]
 mod tests {
