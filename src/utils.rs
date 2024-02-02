@@ -11,8 +11,17 @@ const UNDERWEIGHT_THRESHOLD: f64 = 18.5;
 const NORMAL_WEIGHT_THRESHOLD: f64 = 25.0;
 const OVERWEIGHT_THRESHOLD: f64 = 30.0;
 
-
-
+fn determine_bmi_classification(bmi_value: f64) -> BmiClassification {
+    if bmi_value < UNDERWEIGHT_THRESHOLD {
+        BmiClassification::Underweight
+    } else if bmi_value < NORMAL_WEIGHT_THRESHOLD {
+        BmiClassification::NormalWeight
+    } else if bmi_value < OVERWEIGHT_THRESHOLD {
+        BmiClassification::Overweight
+    } else {
+        BmiClassification::Obese
+    }
+}
 
 pub fn calculate_bmi(weight: f64, height_cm: f64) -> f64 {
     let height_m = centimeters_to_meters(height_cm);
