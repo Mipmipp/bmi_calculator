@@ -7,6 +7,11 @@ enum BmiClassification {
     Obese,
 }
 
+const UNDERWEIGHT_THRESHOLD: f64 = 18.5;
+const NORMAL_WEIGHT_THRESHOLD: f64 = 25.0;
+const OVERWEIGHT_THRESHOLD: f64 = 30.0;
+
+
 
 
 pub fn calculate_bmi(weight: f64, height_cm: f64) -> f64 {
