@@ -29,8 +29,28 @@ pub fn parse_height_input(input: String) -> Result<f64, String> {
     }
 }
 
+pub fn parse_weight_input(input: String) -> Result<f64, String> {
+     if input.trim().is_empty() {
+        return Err(errors::ERROR_EMPTY_INPUT.to_string());
+    } 
+
+    if input.trim() == "0" {
+        return Err(errors::ERROR_NUMBER_IS_ZERO.to_string());
+    }
+  
+    match input.parse::<f64>() {
+        Ok(number) => Ok(format_number_without_decimals(number)),
+        Err(_) => Err(errors::ERROR_VALID_NUMBER.to_string()),  
+    }
+    
+}
+
 pub fn format_number_with_2_decimals(bmi: f64) -> String {
     format!("{:.2}", bmi)
+}
+
+pub fn format_number_without_decimals(bmi: f64) -> f64 {
+    bmi.floor()
 }
 
 fn meters_to_centimeters(meters: f64) -> f64 {

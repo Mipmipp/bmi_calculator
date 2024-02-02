@@ -17,8 +17,8 @@ fn run<R: BufRead, W: Write>(input: &mut R, output: &mut W) -> Result<(), Box<dy
     output.flush()?; 
 
     input.read_line(&mut height)?;
-
-    let weight_parsed = utils::parse_input((&weight.trim()).to_string())?;
+    
+    let weight_parsed = utils::parse_weight_input((&weight.trim()).to_string())?;
     let height_parsed = utils::parse_height_input((&height.trim()).to_string())?;
  
     let bmi_value = utils::calculate_bmi(weight_parsed, height_parsed);
