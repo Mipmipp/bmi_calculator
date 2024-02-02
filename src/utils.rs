@@ -6,15 +6,9 @@ pub fn calculate_bmi(weight: f64, height_cm: f64) -> f64 {
 }
 
 pub fn parse_height_input(input: String) -> Result<f64, String> {
-    if input.trim().is_empty() {
-        return Err(errors::ERROR_EMPTY_INPUT.to_string());
-    } 
+    let validated_input = validate_input(input)?;   
 
-    if input.trim() == "0" {
-        return Err(errors::ERROR_NUMBER_IS_ZERO.to_string());
-    }
-
-    let filtered_input: String = input.replace(',', ".").trim().to_string();
+    let filtered_input: String = validated_input.replace(',', ".").trim().to_string();
 
     if filtered_input.contains('.') {
          match filtered_input.parse::<f64>() {
@@ -30,19 +24,26 @@ pub fn parse_height_input(input: String) -> Result<f64, String> {
 }
 
 pub fn parse_weight_input(input: String) -> Result<f64, String> {
-     if input.trim().is_empty() {
-        return Err(errors::ERROR_EMPTY_INPUT.to_string());
-    } 
+    let validated_input = validate_input(input)?;   
 
-    if input.trim() == "0" {
-        return Err(errors::ERROR_NUMBER_IS_ZERO.to_string());
-    }
   
-    match input.parse::<f64>() {
+    match validated_input.parse::<f64>() {
         Ok(number) => Ok(format_number_without_decimals(number)),
         Err(_) => Err(errors::ERROR_VALID_NUMBER.to_string()),  
     }
     
+}
+
+pub fn validate_input(input: String) -> Result<String, String> {
+    if input.trim().is_empty() {
+        return Err(errors::ERROR_EMPTY_INPUT.to_string());
+    }
+
+    if input.trim() == "0" {
+        return Err(errors::ERROR_NUMBER_IS_ZERO.to_string());
+    }
+
+    Ok(input)
 }
 
 pub fn format_number_with_2_decimals(number: f64) -> String {
