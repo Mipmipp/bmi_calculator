@@ -125,7 +125,7 @@ mod tests {
     }
 
     #[test] 
-    fn test_parse_weight_input_with_valid_number() {
+    fn test_parse_weight_input_with_number_with_decimal() {
         let input = "75.45".to_string();
         assert_eq!(parse_weight_input(input).unwrap(), 75.0);
     }
